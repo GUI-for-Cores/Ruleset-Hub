@@ -37,9 +37,9 @@ function generateMeta() {
   const geoip = generate("meta", "./meta/geo/geoip/", "geoip", ".list");
   const content = JSON.stringify({
     geosite:
-      "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/",
+      "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/",
     geoip:
-      "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/",
+      "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/",
     list: geosite.concat(geoip),
   });
 
@@ -51,9 +51,9 @@ function generateSing() {
   const geoip = generate("sing", "./sing/geo/geoip/", "geoip", ".json");
   const content = JSON.stringify({
     geosite:
-      "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geosite/",
+      "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/",
     geoip:
-      "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo/geoip/",
+      "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/",
     list: geosite.concat(geoip),
   });
 
