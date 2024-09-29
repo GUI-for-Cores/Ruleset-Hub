@@ -1,2 +1,1 @@
-export const meta = {};
-export const sing = {};
+export default {}
