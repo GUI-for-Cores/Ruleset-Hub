@@ -1,7 +1,7 @@
 import fs from "fs";
-import { meta, sing } from "./description-map.mjs";
+import DescriptionMap from "./description-map.mjs";
 
-function generate(client, path, geodata, ext) {
+function generate(path, geodata, ext) {
   const dirs = fs.readdirSync(path, { encoding: "utf-8" });
   const files = dirs.filter((file) => file.endsWith(ext));
   const list = files.map((item) => {
@@ -24,7 +24,7 @@ function generate(client, path, geodata, ext) {
 
     return {
       name,
-      description: { meta, sing }[client][name],
+      description: DescriptionMap[name],
       type: geodata,
       count,
     };
@@ -33,8 +33,8 @@ function generate(client, path, geodata, ext) {
 }
 
 function generateMeta() {
-  const geosite = generate("meta", "./meta/geo/geosite/", "geosite", ".list");
-  const geoip = generate("meta", "./meta/geo/geoip/", "geoip", ".list");
+  const geosite = generate("./meta/geo/geosite/", "geosite", ".list");
+  const geoip = generate("./meta/geo/geoip/", "geoip", ".list");
   const content = JSON.stringify({
     geosite:
       "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/",
@@ -47,8 +47,8 @@ function generateMeta() {
 }
 
 function generateSing() {
-  const geosite = generate("sing", "./sing/geo/geosite/", "geosite", ".json");
-  const geoip = generate("sing", "./sing/geo/geoip/", "geoip", ".json");
+  const geosite = generate("./sing/geo/geosite/", "geosite", ".json");
+  const geoip = generate("./sing/geo/geoip/", "geoip", ".json");
   const content = JSON.stringify({
     geosite:
       "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/",
