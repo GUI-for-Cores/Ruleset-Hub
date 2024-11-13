@@ -18,15 +18,19 @@ jobs:
         run: |
           git clone -b meta --depth=1 https://github.com/MetaCubeX/meta-rules-dat.git meta
           git clone -b sing --depth=1 https://github.com/MetaCubeX/meta-rules-dat.git sing
-          node generate.mjs
+          node generate-lite.mjs
           openssl dgst -sha256 meta.json | sed 's/([^)]*)//g' > meta-version.txt
           openssl dgst -sha256 sing.json | sed 's/([^)]*)//g' > sing-version.txt
+
+          node generate-full.mjs
+          openssl dgst -sha256 meta-full.json | sed 's/([^)]*)//g' > meta-full-version.txt
+          openssl dgst -sha256 sing-full.json | sed 's/([^)]*)//g' > sing-full-version.txt
 
       - name: Create Release and Upload Assets
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./{meta.json,sing.json,meta-version.txt,sing-version.txt}
+          file: ./{*.json,*.txt}
           file_glob: true
           tag: latest
           release_name: latest

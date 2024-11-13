@@ -43,7 +43,7 @@ function generateMeta() {
     list: geosite.concat(geoip),
   });
 
-  fs.writeFileSync("./meta.json", content, { encoding: "utf-8" });
+  fs.writeFileSync("./meta-full.json", content, { encoding: "utf-8" });
 }
 
 function generateSing() {
@@ -57,7 +57,7 @@ function generateSing() {
     list: geosite.concat(geoip),
   });
 
-  fs.writeFileSync("./sing.json", content, { encoding: "utf-8" });
+  fs.writeFileSync("./sing-full.json", content, { encoding: "utf-8" });
 }
 
 generateMeta();
