@@ -5,7 +5,7 @@ function generate(path, geodata, ext) {
   const dirs = fs.readdirSync(path, { encoding: "utf-8" });
   const files = dirs.filter((file) => file.endsWith(ext));
   const list = files.map((item) => {
-    const name = item.substring(0, item.length - ext.length);
+    const name = item.substring(0, item.length - ext.length) + "-" + geodata;
     const content = fs.readFileSync(path + item, { encoding: "utf-8" });
     let count = 0;
 
