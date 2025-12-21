@@ -35,12 +35,13 @@ function generate(path, geodata, ext) {
 function generateMeta() {
   const geosite = generate("./meta/geo/geosite/", "geosite", ".list");
   const geoip = generate("./meta/geo/geoip/", "geoip", ".list");
+  const list = sortList("meta.json", geosite.concat(geoip));
   const content = JSON.stringify({
     geosite:
       "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/",
     geoip:
       "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/",
-    list: geosite.concat(geoip),
+    list,
   });
 
   fs.writeFileSync("./meta-full.json", content, { encoding: "utf-8" });
@@ -49,15 +50,37 @@ function generateMeta() {
 function generateSing() {
   const geosite = generate("./sing/geo/geosite/", "geosite", ".json");
   const geoip = generate("./sing/geo/geoip/", "geoip", ".json");
+  const list = sortList("sing.json", geosite.concat(geoip));
   const content = JSON.stringify({
     geosite:
       "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/",
     geoip:
       "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/",
-    list: geosite.concat(geoip),
+    list,
   });
 
   fs.writeFileSync("./sing-full.json", content, { encoding: "utf-8" });
+}
+
+function sortList(file, list) {
+  const liteContent = fs.readFileSync(file, { encoding: "utf-8" });
+  const liteList = JSON.parse(liteContent).list;
+
+  const indexMap = new Map();
+  liteList.forEach((item, index) => {
+    const key = `${item.name}__${item.type}`;
+    indexMap.set(key, index);
+  });
+
+  return list.sort((a, b) => {
+    const aKey = `${a.name}__${a.type}`;
+    const bKey = `${b.name}__${b.type}`;
+
+    const aIndex = indexMap.has(aKey) ? indexMap.get(aKey) : Infinity;
+    const bIndex = indexMap.has(bKey) ? indexMap.get(bKey) : Infinity;
+
+    return aIndex - bIndex;
+  });
 }
 
 generateMeta();
